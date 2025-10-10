@@ -58,7 +58,7 @@ func _input(event):
 				selected_sprite.global_position = original_positions[selected_sprite]
 			selected_sprite = null
 
-#option button initiation with double click above
+#option button initiation with double click above.. i hope
 func _show_option_button_popup(sprite):
 	if not sprite:
 		return
@@ -84,4 +84,48 @@ func _option_button_stuff(mybutton):
 	mybutton.get_popup().add_item("Overhaul")
 	mybutton.get_popup().add_item("Division")
 	mybutton.get_popup().add_item("Group")
+	mybutton.get_popup().connect("id_pressed", Callable(self, "_on_popup_item_selected").bind(mybutton))
+
+
+func _on_popup_item_selected(id, mybutton):
+	var item = mybutton.get_popup().get_item_text(id)
+	_add_sprite(item,mybutton)
+	print("You picked:", item)
 	
+func _add_sprite(item, mybutton):
+	var ability = Sprite2D.new()
+	
+	if item == "Line A":
+		ability.texture = preload("res://Letters/A-removebg-preview.png")
+	elif item == "Line B":
+		ability.texture = preload("res://Letters/B-removebg-preview.png")
+	elif item == "Search":
+		ability.texture = preload("res://Letters/S-removebg-preview.png")
+	elif item == "2nd Search":
+		ability.texture = preload("res://Letters/SS-removebg-preview.png")
+	elif item == "Laddering":
+		ability.texture = preload("res://Letters/L-removebg-preview.png")
+	elif item == "Vent":
+		ability.texture = preload("res://Letters/V-removebg-preview.png")
+	elif item == "Extrication":
+		ability.texture = preload("res://Letters/X-removebg-preview.png")
+	elif item == "Utilities":
+		ability.texture = preload("res://Letters/U-removebg-preview.png")
+	elif item == "Salvage":
+		ability.texture = preload("res://Letters/_-removebg-preview.png")
+	elif item == "Overhaul":
+		ability.texture = preload("res://Letters/O-removebg-preview.png")
+	elif item == "Division":
+		ability.texture = preload("res://Letters/D-removebg-preview.png")
+	elif item == "Group":
+		ability.texture = preload("res://Letters/G-removebg-preview.png")
+	else:
+		return  # Exit if no match
+
+	var sprite = mybutton.get_parent()
+	sprite.add_child(ability)
+
+	# Position the letter relative to the sprite
+	ability.position = Vector2(20, 10)  
+	ability.scale = Vector2(1.2, 1.2)
+	#ability.modulate = Color(1, 1, 1) 
